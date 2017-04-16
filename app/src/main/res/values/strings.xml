@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="action_settings">Settings</string>
+    <string name="most_popular">most popular</string>
+    <string name="highest_rated">highest rated</string>
+    <string name="sort">sort</string>
+    <string name="movie_rating">Rating:</string>
+    <string name="movie_title">Title:</string>
+    <string name="movie_synopsis">Synopsis:</string>
+    <string name="movie_release">Release Date:</string>
+    <string name="error_msg">Problem Connecting</string>
+</resources>
