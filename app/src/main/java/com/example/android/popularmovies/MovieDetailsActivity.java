@@ -3,6 +3,7 @@ package com.example.android.popularmovies;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -40,6 +41,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private ImageView moviePosterImage;
     private TextView movieSynopsis, movieRelease;
     private TextView movieTitle, movieRating;
+    private Parcelable mSaveTrailer;
+    private Parcelable mSaveReview;
 
     private final static int REVIEWS_LOADER = 13;
     private final static int TRAILERS_LOADER = 14;
@@ -55,6 +58,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private RecyclerView trailerRecyclerView;
     private ProgressBar mReviewLoadingIndicator;
     private ProgressBar mTrailerLoadingIndicator;
+    private LinearLayoutManager reviewLayoutManager;
+    private LinearLayoutManager trailerLayoutManager;
 
 
     @Override
@@ -67,7 +72,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         movieRelease = (TextView) findViewById(R.id.movie_release);
         movieSynopsis = (TextView) findViewById(R.id.movie_synopsis);
         movieTitle = (TextView) findViewById(R.id.movie_title);
-
 
 
         mReviewLoadingIndicator = (ProgressBar) findViewById(R.id.pb_reviews_loading_indicator);
@@ -98,7 +102,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         reviewRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
         reviewRecyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager reviewLayoutManager = new LinearLayoutManager(this);
+        reviewLayoutManager = new LinearLayoutManager(this);
         reviewRecyclerView.setLayoutManager(reviewLayoutManager);
         getReviewLoader();
 
@@ -106,11 +110,40 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         trailerRecyclerView = (RecyclerView) findViewById(R.id.rv_trailers);
         trailerRecyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager trailerLayoutManager = new LinearLayoutManager(this);
+        trailerLayoutManager = new LinearLayoutManager(this);
         trailerRecyclerView.setLayoutManager(trailerLayoutManager);
         getTrailerLoader();
 
     }
+
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        mSaveTrailer = trailerLayoutManager.onSaveInstanceState();
+        mSaveReview = reviewLayoutManager.onSaveInstanceState();
+
+        state.putParcelable("SAVED", mSaveTrailer);
+        state.putParcelable("S", mSaveReview);
+    }
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+
+        // Retrieve list state and list/item positions
+        if (state != null) {
+            mSaveTrailer = state.getParcelable("SAVED");
+            mSaveReview = state.getParcelable("S");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mSaveTrailer != null && mSaveReview != null) {
+            reviewLayoutManager.onRestoreInstanceState(mSaveReview);
+            trailerLayoutManager.onRestoreInstanceState(mSaveTrailer);
+        }
+    }
+
 
     // For Trailer Loader
     private LoaderManager.LoaderCallbacks<List<Trailer>> trailerLoader = new LoaderManager.LoaderCallbacks<List<Trailer>>() {

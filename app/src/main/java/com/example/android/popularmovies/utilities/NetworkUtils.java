@@ -19,7 +19,7 @@ import okhttp3.Response;
 public class NetworkUtils {
 
     public final static String MOVIE_BASE_URL = "http://api.themoviedb.org/3/movie";
-    public static String API_KEY = "";
+    public static String API_KEY = "9e34a591a62d6273d144c4c0347d0587";
     /**
      * This method returns the entire result of movies from the HTTP response.
      */

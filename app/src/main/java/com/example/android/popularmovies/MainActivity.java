@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -44,9 +45,13 @@ public class MainActivity extends AppCompatActivity
 
     private ProgressBar mLoadingIndicator;
     private List<Movie> movies;
+    private Parcelable mSave;
 
     private TextView mNetworkMsgView;
     private RecyclerView moviesRecyclerView;
+
+    GridLayoutManager layoutManager;
+    public MovieAdapter movieAdapter;
 
     //Insert your Api key here
     // private final static String api_key = "9e34a591a62d6273d144c4c0347d0587";
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         // Check if Internet is connected
         if (isNetworkAvailable()) {
             mNetworkMsgView.setVisibility(View.INVISIBLE);
-            GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+            layoutManager = new GridLayoutManager(this, 2);
             moviesRecyclerView.setLayoutManager(layoutManager);
             moviesRecyclerView.setHasFixedSize(true);
 
@@ -90,6 +95,28 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        mSave = layoutManager.onSaveInstanceState();
+        state.putParcelable("SAVED", mSave);
+    }
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+
+        // Retrieve list state and list/item positions
+        if (state != null)
+            mSave = state.getParcelable("SAVED");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mSave != null) {
+            layoutManager.onRestoreInstanceState(mSave);
+
+        }
+    }
 
     //Handles what happens when an Item is selected in the Settings Group
     @Override
@@ -169,8 +196,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
-            MovieAdapter moviesAdapter = new MovieAdapter(data, MainActivity.this);
-            moviesRecyclerView.setAdapter(moviesAdapter);
+            movieAdapter = new MovieAdapter(data, MainActivity.this);
+            moviesRecyclerView.setAdapter(movieAdapter);
         }
 
         @Override
