@@ -47,6 +47,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private final static String QUERY = "api_key";
     private int movieIdPass;
 
+
     private List<Trailer> trailers;
     private List<Review> reviews;
 
@@ -66,6 +67,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         movieRelease = (TextView) findViewById(R.id.movie_release);
         movieSynopsis = (TextView) findViewById(R.id.movie_synopsis);
         movieTitle = (TextView) findViewById(R.id.movie_title);
+
+
 
         mReviewLoadingIndicator = (ProgressBar) findViewById(R.id.pb_reviews_loading_indicator);
         mTrailerLoadingIndicator = (ProgressBar) findViewById(R.id.pb_trailers_loading_indicator);
@@ -264,7 +267,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        // TODO open Youtube App
+        // Open video in Youtube App
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailers.get(clickedItemIndex).getKey())));
     }
+
 }

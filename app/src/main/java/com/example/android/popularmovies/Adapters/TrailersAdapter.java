@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.popularmovies.Model.Trailer;
@@ -55,10 +56,12 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
 
     public class TrailersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvTrailerSite;
+        ImageView playButton;
 
         public TrailersViewHolder(View itemView) {
             super(itemView);
             tvTrailerSite = (TextView) itemView.findViewById(R.id.tv_trailer_site);
+            playButton = (ImageView) itemView.findViewById(R.id.play_button);
             itemView.setOnClickListener(this);
         }
 
