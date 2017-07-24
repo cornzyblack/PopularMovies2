@@ -83,9 +83,21 @@
 
         <include layout="@layout/divider" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reviews"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
         <include layout="@layout/reviews" />
 
         <include layout="@layout/divider" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trailers" />
 
         <include layout="@layout/trailers" />
 
