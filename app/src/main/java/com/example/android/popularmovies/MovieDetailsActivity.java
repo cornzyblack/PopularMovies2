@@ -40,7 +40,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private TextView movieSynopsis, movieRelease;
     private TextView movieTitle, movieRating;
 
-    private static int REVIEWS_LOADER = 13;
+    private final static int REVIEWS_LOADER = 13;
     private final static int TRAILERS_LOADER = 14;
 
     private final static String QUERY = "api_key";
@@ -69,9 +69,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         mReviewLoadingIndicator = (ProgressBar) findViewById(R.id.pb_reviews_loading_indicator);
         mTrailerLoadingIndicator = (ProgressBar) findViewById(R.id.pb_trailers_loading_indicator);
 
-        reviewRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
-        trailerRecyclerView = (RecyclerView) findViewById(R.id.rv_trailers);
-
         //Get Intent and Data from MainActivity Intent
         Intent movieDetailsIntent = getIntent();
 
@@ -94,14 +91,20 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
             movieIdPass = movieDetailsIntent.getIntExtra("movie_id", 0);
         }
+        reviewRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
+        reviewRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager reviewLayoutManager = new LinearLayoutManager(this);
         reviewRecyclerView.setLayoutManager(reviewLayoutManager);
-        reviewRecyclerView.setHasFixedSize(true);
+        getReviewLoader();
+
+
+        trailerRecyclerView = (RecyclerView) findViewById(R.id.rv_trailers);
+        trailerRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager trailerLayoutManager = new LinearLayoutManager(this);
         trailerRecyclerView.setLayoutManager(trailerLayoutManager);
-        trailerRecyclerView.setHasFixedSize(true);
+        getTrailerLoader();
 
     }
 
@@ -193,8 +196,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     public void getTrailerLoader() {
         Bundle trailerBundle = new Bundle();
         trailerBundle.putInt("MOVIE_ID", movieIdPass);
-        LoaderManager loaderManager = getSupportLoaderManager();
-        loaderManager.restartLoader(TRAILERS_LOADER, trailerBundle, trailerLoader);
+        LoaderManager trailerLoaderManager = getSupportLoaderManager();
+        trailerLoaderManager.restartLoader(TRAILERS_LOADER, trailerBundle, trailerLoader);
     }
 
     public void getReviewLoader() {
@@ -215,10 +218,12 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
             for (int i = 0; i < results.length(); i++) {
                 JSONObject trailer = results.getJSONObject(i);
-
+                String name = trailer.getString("name");
+                String key = trailer.getString("key");
+                this.trailers.add(new Trailer(name, key));
             }
         } catch (JSONException e) {
-
+            Log.d("Error", "trailers");
         }
         //loop through the results array and get Trailer objects
 
