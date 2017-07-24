@@ -1,36 +1,39 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.Model;
 
 /**
  * Created by Precious on 15/04/2017.
  */
 
 public class Movie {
-    private String mMovieRating;
+    private String mMovieVoteCount;
     private String mMoviePosterPath;
-    private String mMovieSynopsis;
+    private String mMovieOverview;
     private String mMovieTitle;
     private String mMovieReleaseDate;
+    private int mMovieId;
 
     /**
-     * @param movieRating      the Rating of the Movie
+     * @param movieVoteCount   the Rating of the Movie
      * @param moviePosterPath  the Poster Image path of the Movie
-     * @param movieSynopsis    the Synopsis of the Movie
+     * @param movieOverview    the Synopsis of the Movie
      * @param movieTitle       the Title for the Movie
      * @param movieReleaseDate the Release Date for the Movie
+     * @param movieId the Id for the Movie
      */
-    public Movie(String movieRating, String moviePosterPath, String movieSynopsis, String movieTitle, String movieReleaseDate) {
-        this.mMovieRating = movieRating;
+    public Movie(String movieVoteCount, String moviePosterPath, String movieOverview, String movieTitle, String movieReleaseDate, int movieId) {
+        this.mMovieVoteCount = movieVoteCount;
         this.mMoviePosterPath = moviePosterPath;
-        this.mMovieSynopsis = movieSynopsis;
+        this.mMovieOverview = movieOverview;
         this.mMovieTitle = movieTitle;
         this.mMovieReleaseDate = movieReleaseDate;
+        this.mMovieId = movieId;
     }
 
     /**
      * return the Movie Synopsis
      */
     public String getMovieSynopsis() {
-        return mMovieSynopsis;
+        return mMovieOverview;
     }
 
     /**
@@ -44,7 +47,7 @@ public class Movie {
      * @return the Movie Rating
      */
     public String getMovieRating() {
-        return mMovieRating;
+        return mMovieVoteCount;
     }
 
     /**
@@ -60,4 +63,12 @@ public class Movie {
     public String getMovieReleaseDate() {
         return mMovieReleaseDate;
     }
+
+    /**
+     * @return the movieId for the Movie
+     */
+    public int getMovieId() {
+        return mMovieId;
+    }
+
 }

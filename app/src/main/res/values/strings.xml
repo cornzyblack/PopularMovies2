@@ -4,9 +4,12 @@
     <string name="most_popular">most popular</string>
     <string name="highest_rated">highest rated</string>
     <string name="sort">sort</string>
+    <string name="favourite">Favourite</string>
     <string name="movie_rating">Rating:</string>
     <string name="movie_title">Title:</string>
     <string name="movie_synopsis">Synopsis:</string>
     <string name="movie_release">Release Date:</string>
-    <string name="error_msg">Problem Connecting</string>
+    <string name="error_msg">Problem Connecting, Network may not be available</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
 </resources>
