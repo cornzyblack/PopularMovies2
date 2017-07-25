@@ -15,9 +15,9 @@ import android.provider.BaseColumns;
 //     |           |
 // -------------------------------
 
-public final class MovieFavouriteContract {
+public final class FavouriteMovieContract {
 
-    private MovieFavouriteContract() {
+    private FavouriteMovieContract() {
     }
 
     /*
