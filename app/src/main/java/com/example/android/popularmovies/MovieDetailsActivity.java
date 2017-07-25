@@ -12,9 +12,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.popularmovies.Adapters.ReviewsAdapter;
 import com.example.android.popularmovies.Adapters.TrailersAdapter;
@@ -44,6 +46,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private Parcelable mSaveTrailer;
     private Parcelable mSaveReview;
 
+    private ImageButton mFavouriteButton;
+
     private final static int REVIEWS_LOADER = 13;
     private final static int TRAILERS_LOADER = 14;
 
@@ -72,7 +76,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         movieRelease = (TextView) findViewById(R.id.movie_release);
         movieSynopsis = (TextView) findViewById(R.id.movie_synopsis);
         movieTitle = (TextView) findViewById(R.id.movie_title);
-
+        mFavouriteButton = (ImageButton) findViewById(R.id.fav_button);
 
         mReviewLoadingIndicator = (ProgressBar) findViewById(R.id.pb_reviews_loading_indicator);
         mTrailerLoadingIndicator = (ProgressBar) findViewById(R.id.pb_trailers_loading_indicator);
@@ -99,6 +103,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
             movieIdPass = movieDetailsIntent.getIntExtra("movie_id", 0);
         }
+        mFavouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MovieDetailsActivity.this, "favourited", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         reviewRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
         reviewRecyclerView.setHasFixedSize(true);
 
@@ -115,35 +126,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         getTrailerLoader();
 
     }
-
-    protected void onSaveInstanceState(Bundle state) {
-        super.onSaveInstanceState(state);
-        mSaveTrailer = trailerLayoutManager.onSaveInstanceState();
-        mSaveReview = reviewLayoutManager.onSaveInstanceState();
-
-        state.putParcelable("SAVED", mSaveTrailer);
-        state.putParcelable("S", mSaveReview);
-    }
-
-    protected void onRestoreInstanceState(Bundle state) {
-        super.onRestoreInstanceState(state);
-
-        // Retrieve list state and list/item positions
-        if (state != null) {
-            mSaveTrailer = state.getParcelable("SAVED");
-            mSaveReview = state.getParcelable("S");
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mSaveTrailer != null && mSaveReview != null) {
-            reviewLayoutManager.onRestoreInstanceState(mSaveReview);
-            trailerLayoutManager.onRestoreInstanceState(mSaveTrailer);
-        }
-    }
-
 
     // For Trailer Loader
     private LoaderManager.LoaderCallbacks<List<Trailer>> trailerLoader = new LoaderManager.LoaderCallbacks<List<Trailer>>() {

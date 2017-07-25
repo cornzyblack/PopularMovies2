@@ -95,28 +95,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    protected void onSaveInstanceState(Bundle state) {
-        super.onSaveInstanceState(state);
-        mSave = layoutManager.onSaveInstanceState();
-        state.putParcelable("SAVED", mSave);
-    }
 
-    protected void onRestoreInstanceState(Bundle state) {
-        super.onRestoreInstanceState(state);
-
-        // Retrieve list state and list/item positions
-        if (state != null)
-            mSave = state.getParcelable("SAVED");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mSave != null) {
-            layoutManager.onRestoreInstanceState(mSave);
-
-        }
-    }
 
     //Handles what happens when an Item is selected in the Settings Group
     @Override
