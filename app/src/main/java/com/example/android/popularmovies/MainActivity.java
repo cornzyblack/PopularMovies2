@@ -2,6 +2,7 @@ package com.example.android.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity
 
     private final static String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p/";
     private final static int POPULAR_MOVIES_LOADER = 12;
-
+    private SQLiteDatabase mDb;
     private final static String QUERY = "api_key";
 
     private ProgressBar mLoadingIndicator;

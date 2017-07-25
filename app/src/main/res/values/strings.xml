@@ -4,7 +4,9 @@
     <string name="most_popular">most popular</string>
     <string name="highest_rated">highest rated</string>
     <string name="sort">sort</string>
-    <string name="favourite">Favourite</string>
+    <string name="favourite">Favourites</string>
+    <string name="added_to_favourite">Added to favourites</string>
+    <string name="movie_detail">Movie details</string>
     <string name="movie_rating">Rating:</string>
     <string name="movie_title">Title:</string>
     <string name="movie_synopsis">Synopsis:</string>

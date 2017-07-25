@@ -1,9 +1,12 @@
 package com.example.android.popularmovies;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.android.popularmovies.adapters.ReviewsAdapter;
 import com.example.android.popularmovies.adapters.TrailersAdapter;
+import com.example.android.popularmovies.data.FavouriteMovieContract;
 import com.example.android.popularmovies.model.Review;
 import com.example.android.popularmovies.model.Trailer;
 import com.example.android.popularmovies.utilities.NetworkUtils;
@@ -43,8 +47,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private ImageView moviePosterImage;
     private TextView movieSynopsis, movieRelease;
     private TextView movieTitle, movieRating;
-    private Parcelable mSaveTrailer;
-    private Parcelable mSaveReview;
 
     private ImageButton mFavouriteButton;
 
@@ -103,10 +105,26 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
             movieIdPass = movieDetailsIntent.getIntExtra("movie_id", 0);
         }
+
+
         mFavouriteButton.setOnClickListener(new View.OnClickListener() {
+
+            // Retrieve information to be put inside DB from Intent
+            Intent movieIntent = getIntent();
+            String title = movieIntent.getStringExtra("title");
+
+            // Button to add Movie to Favourites
             @Override
             public void onClick(View v) {
-                Toast.makeText(MovieDetailsActivity.this, "favourited", Toast.LENGTH_SHORT).show();
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(FavouriteMovieContract.MovieEntry.COLUMN_MOVIE_NAME, title);
+                contentValues.put(FavouriteMovieContract.MovieEntry.COLUMN_MOVIE_ID, movieIdPass);
+
+                getContentResolver()
+                        .insert(FavouriteMovieContract.MovieEntry.CONTENT_URI, contentValues);
+
+                Toast.makeText(MovieDetailsActivity.this, R.string.added_to_favourite, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -115,7 +133,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
         reviewLayoutManager = new LinearLayoutManager(this);
         reviewRecyclerView.setLayoutManager(reviewLayoutManager);
-        getReviewLoader();
+        // If network is available show reviews
+        if (isNetworkAvailable())
+            getReviewLoader();
 
 
         trailerRecyclerView = (RecyclerView) findViewById(R.id.rv_trailers);
@@ -123,7 +143,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
         trailerLayoutManager = new LinearLayoutManager(this);
         trailerRecyclerView.setLayoutManager(trailerLayoutManager);
-        getTrailerLoader();
+        // If network is available show trailers
+        if (isNetworkAvailable())
+            getTrailerLoader();
 
     }
 
@@ -286,4 +308,23 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailers.get(clickedItemIndex).getKey())));
     }
 
+    // Insert a New row in the Table
+  //  public long addNewMovies(String movieName, int movieId) {
+   //     ContentValues cv = new ContentValues();
+     //   cv.put(FavouriteMovieContract.MovieEntry.COLUMN_MOVIE_ID, movieId);
+       // cv.put(FavouriteMovieContract.MovieEntry.COLUMN_MOVIE_NAME, movieName);
+        //return mDb.insert(FavouriteMovieContract.MovieEntry.TABLE_NAME, null, cv);
+    //}
+
+    // Check if Network is Available
+    private boolean isNetworkAvailable() {
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        boolean isAvailable = false;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        }
+        return isAvailable;
+    }
 }

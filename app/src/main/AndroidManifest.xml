@@ -5,6 +5,7 @@
     <!-- Permission to allow App to use Internet-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <!-- Permission to allow App to access Network state-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -23,11 +24,27 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MovieDetailsActivity">
+        <activity
+            android:name=".MovieDetailsActivity"
+            android:label="@string/movie_detail">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <activity
+            android:name=".FavouriteMoviesActivity"
+            android:label="@string/favourite">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <!-- Add permission to Register Provider -->
+        <provider
+            android:name="com.example.android.popularmovies.data.FavouriteMovieContentProvider"
+            android:authorities="com.example.android.popularmovies"
+            android:exported="false" />
+
     </application>
 
 </manifest>

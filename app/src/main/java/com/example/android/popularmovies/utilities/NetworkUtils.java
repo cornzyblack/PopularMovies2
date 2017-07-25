@@ -4,8 +4,6 @@ package com.example.android.popularmovies.utilities;
  * Created by Precious on 15/04/2017.
  */
 
-import android.util.Log;
-
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -29,7 +27,6 @@ public class NetworkUtils {
         HttpUrl.Builder urlBuilder = urlBuilder(baseUrl, query, folder, apiKey);
 
         String url = urlBuilder.build().toString();
-        Log.e("url", url);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -47,7 +44,6 @@ public class NetworkUtils {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = urlReviewBuilder(baseUrl, query, id, api_key);
         String url = urlBuilder.build().toString();
-        Log.e("url", url);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -65,7 +61,6 @@ public class NetworkUtils {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = urlTrailerBuilder(baseUrl, query, id, api_key);
         String url = urlBuilder.build().toString();
-        Log.e("url", url);
 
         Request request = new Request.Builder()
                 .url(url)
