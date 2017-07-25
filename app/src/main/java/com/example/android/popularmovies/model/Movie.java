@@ -1,4 +1,4 @@
-package com.example.android.popularmovies.Model;
+package com.example.android.popularmovies.model;
 
 /**
  * Created by Precious on 15/04/2017.

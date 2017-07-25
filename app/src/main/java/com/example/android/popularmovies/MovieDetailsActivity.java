@@ -18,10 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.popularmovies.Adapters.ReviewsAdapter;
-import com.example.android.popularmovies.Adapters.TrailersAdapter;
-import com.example.android.popularmovies.Model.Review;
-import com.example.android.popularmovies.Model.Trailer;
+import com.example.android.popularmovies.adapters.ReviewsAdapter;
+import com.example.android.popularmovies.adapters.TrailersAdapter;
+import com.example.android.popularmovies.model.Review;
+import com.example.android.popularmovies.model.Trailer;
 import com.example.android.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 

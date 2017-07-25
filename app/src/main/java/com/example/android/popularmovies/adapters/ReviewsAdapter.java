@@ -1,4 +1,4 @@
-package com.example.android.popularmovies.Adapters;
+package com.example.android.popularmovies.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.Model.Review;
+import com.example.android.popularmovies.model.Review;
 import com.example.android.popularmovies.R;
 
 import java.util.List;
