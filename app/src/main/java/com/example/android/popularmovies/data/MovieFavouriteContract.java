@@ -7,10 +7,12 @@ import android.provider.BaseColumns;
  */
 
 
-// Contract class for the Movie
+// Contract class for the Movie Favourites
 // -------------------------------
-// + _ID | movie_name| movie_ID
-// +     |           |
+//  ID | movie_name| movie_ID
+// ----|-----------|--------------
+//     |           |
+//     |           |
 // -------------------------------
 
 public final class MovieFavouriteContract {
